@@ -1,0 +1,5 @@
+---
+# podman_nginx/defaults/main.yml
+
+podman_nginx_image: 'docker.io/library/nginx:stable'
+podman_nginx_data_directory: '/opt/nginx_Podman'
