@@ -5,3 +5,4 @@ podman_nginx_image: 'docker.io/library/nginx:stable'
 podman_nginx_data_directory: '/opt/nginx_Podman'
 podman_nginx_default_user: 'root'
 podman_nginx_default_group: 'root'
+podman_nginx_rootful_container: false
