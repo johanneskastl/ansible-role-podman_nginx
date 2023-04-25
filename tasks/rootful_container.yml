@@ -26,20 +26,23 @@
       new: true
 
 - name: 'Start the container-nginx.service service'
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: 'container-nginx.service'
     state: started
     daemon_reload: true
+    scope: system
 
 - name: 'Enable the container-nginx.service service'
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: 'container-nginx.service'
     enabled: true
+    scope: system
 
 - name: 'Enable the podman-auto-update.timer'
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: 'podman-auto-update.timer'
     enabled: true
+    scope: system
   when:
     - enable_podman_auto_updates_timer is defined
     - enable_podman_auto_updates_timer | bool
