@@ -18,5 +18,7 @@
 - name: "Include tasks for rootful container"
   ansible.builtin.include_tasks:
     file: rootful_container.yml
+    apply:
+      become: true
   when:
     - podman_nginx_rootful_container | bool
