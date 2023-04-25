@@ -15,7 +15,7 @@
     image: "{{ podman_nginx_image }}"
     state: 'started'
     publish:
-      - '80:80/tcp'
+      - "{{ podman_nginx_rootful_container_port }}:80/tcp"
     volume:
       - "{{ podman_nginx_data_directory }}/:/usr/share/nginx/html:ro,z"
     labels:
