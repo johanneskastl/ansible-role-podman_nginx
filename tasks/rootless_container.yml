@@ -1,0 +1,48 @@
+---
+# podman_nginx/tasks/main.yml
+
+- name: "Create directory {{ podman_nginx_data_directory }}"
+  ansible.builtin.file:
+    path: "{{ podman_nginx_data_directory }}"
+    state: 'directory'
+    owner: "{{ podman_nginx_default_user }}"
+    group: "{{ podman_nginx_default_group }}"
+    mode: '0755'
+
+- name: 'Create and start rootful nginx container'
+  containers.podman.podman_container:
+    name: 'nginx'
+    image: "{{ podman_nginx_image }}"
+    state: 'started'
+    publish:
+      - '8080:80/tcp'
+    volume:
+      - "{{ podman_nginx_data_directory }}/:/usr/share/nginx/html:ro,z"
+    labels:
+      PODMAN_SYSTEMD_UNIT: container-nginx
+      io.containers.autoupdate: registry
+    generate_systemd:
+      path: '~/.config/systemd/user/'
+      new: true
+
+- name: 'Start the container-nginx.service service'
+  ansible.builtin.systemd:
+    name: 'container-nginx.service'
+    state: started
+    daemon_reload: true
+    scope: user
+
+- name: 'Enable the container-nginx.service service'
+  ansible.builtin.systemd:
+    name: 'container-nginx.service'
+    enabled: true
+    scope: user
+
+- name: 'Enable the podman-auto-update.timer'
+  ansible.builtin.systemd:
+    name: 'podman-auto-update.timer'
+    enabled: true
+    scope: user
+  when:
+    - enable_podman_auto_updates_timer is defined
+    - enable_podman_auto_updates_timer | bool
