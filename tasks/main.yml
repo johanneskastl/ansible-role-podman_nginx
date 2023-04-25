@@ -1,14 +1,6 @@
 ---
 # podman_nginx/tasks/main.yml
 
-- name: "Create directory {{ podman_nginx_data_directory }}"
-  ansible.builtin.file:
-    path: "{{ podman_nginx_data_directory }}"
-    state: 'directory'
-    owner: "{{ podman_nginx_default_user }}"
-    group: "{{ podman_nginx_default_group }}"
-    mode: '0755'
-
 - name: "Include tasks for rootless container"
   ansible.builtin.include_tasks:
     file: rootless_container.yml
