@@ -6,3 +6,5 @@ podman_nginx_data_directory: '/opt/nginx_Podman'
 podman_nginx_default_user: 'root'
 podman_nginx_default_group: 'root'
 podman_nginx_rootful_container: false
+podman_nginx_rootful_container_port: 80
+podman_nginx_rootless_container_port: 8080
