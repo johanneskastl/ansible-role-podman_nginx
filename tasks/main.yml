@@ -10,11 +10,13 @@
     mode: '0755'
 
 - name: "Include tasks for rootless container"
-  ansible.builtin.include_tasks: rootless_container.yml
+  ansible.builtin.include_tasks:
+    file: rootless_container.yml
   when:
     - not podman_nginx_rootful_container | bool
 
 - name: "Include tasks for rootful container"
-  ansible.builtin.include_tasks: rootful_container.yml
+  ansible.builtin.include_tasks:
+    file: rootful_container.yml
   when:
     - podman_nginx_rootful_container | bool
